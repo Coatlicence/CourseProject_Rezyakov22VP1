@@ -1,19 +1,14 @@
 #pragma once
 
 #include "Figure.h"
+#include <stack>
+#include <list>
+
+using namespace std;
 
 class Stack
 {
-	struct StackElement
-	{
-		StackElement* next = nullptr;
-
-		Figure* figure = nullptr;
-
-		~StackElement();
-	};
-
-	StackElement* first = nullptr;
+	stack<Figure*, list<Figure*>> _stack;
 
 public:
 	void Push(Figure*);
@@ -24,4 +19,3 @@ public:
 
 	~Stack();
 };
-

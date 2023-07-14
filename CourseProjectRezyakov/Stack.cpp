@@ -2,59 +2,33 @@
 
 void Stack::Push(Figure* figure)
 {
-	StackElement* element = new StackElement();
+	if (figure == nullptr) return;
 
-	element->figure = figure;
-
-	if (first == nullptr)
-	{
-		first = element;
-
-		return;
-	}
-
-	element->next = first;
-
-	first = element;
+	_stack.emplace(figure);
 }
 
 Figure* Stack::Pop()
 {
-	if (first == nullptr) return nullptr;
+	auto figure = _stack.top();
 
-	auto element = first;
+	_stack.pop();
 
-	first = element->next;
-
-	Figure* f = element->figure;
-
-	delete element;
-
-	return f;
+	return figure;
 }
 
 void Stack::ShowAll()
 {
-	while (first != nullptr)
-	{
-		first->figure->Show();
+	auto list = _stack._Get_container();
 
-		Pop();
+	for (auto it = list.cbegin(); it != list.cend(); it++)
+	{
+		Figure* f = *it;
+
+		f->Show();
 	}
 }
 
 Stack::~Stack()
 {
-	while (first != nullptr)
-	{
-		auto element = first->next;
-
-		first->figure->~Figure();
-
-		first = element;
-	}
 }
 
-Stack::StackElement::~StackElement()
-{
-}
